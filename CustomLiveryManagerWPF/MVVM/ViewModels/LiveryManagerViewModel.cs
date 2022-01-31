@@ -66,9 +66,12 @@ namespace CustomLiveryManagerWPF.MVVM.ViewModels
         {
             _liveryManager.LoadLiveries();
             _liveries.Clear();
-            foreach(var livery in _liveryManager.Liveries)
+            foreach (var livery in _liveryManager.Liveries)
             {
-                _liveries.Add(new LiveryModel(livery));
+                if (!_liveryManager.ManagedLiveries.Contains(livery))
+                {
+                    _liveries.Add(new LiveryModel(livery));
+                }
             }
         }
 
