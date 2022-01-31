@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:CustomLiveryManagerWPF.MVVM.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:CustomLiveryManagerWPF.MVVM.ViewModels"
-    Title="LiveryManagerView"
+    Title="Custom Livery Manager"
     Width="1000"
     Height="500"
     d:DataContext="{d:DesignInstance Type=viewmodels:LiveryManagerViewModel}"
