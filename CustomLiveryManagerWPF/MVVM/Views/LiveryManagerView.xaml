@@ -65,11 +65,28 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-                <Button
-                    Grid.Row="2"
-                    Margin="10,10"
-                    Command="{Binding Path=SelectAllLiveriesCmd}"
-                    Content="Select all" />
+
+                <Grid Grid.Row="2">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Column="0"
+                        Margin="10,10"
+                        Command="{Binding Path=SelectAllLiveriesCmd}"
+                        CommandParameter="True"
+                        Content="Select all" />
+
+                    <Button
+                        Grid.Column="1"
+                        Margin="10,10"
+                        Command="{Binding Path=SelectAllLiveriesCmd}"
+                        CommandParameter="False"
+                        Content="Unselect all" />
+                </Grid>
             </Grid>
         </Border>
 
@@ -133,11 +150,27 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-                <Button
-                    Grid.Row="2"
-                    Margin="10,10"
-                    Command="{Binding Path=SelectAllManagedLiveriesCmd}"
-                    Content="Select all" />
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Column="0"
+                        Margin="10,10"
+                        Command="{Binding Path=SelectAllManagedLiveriesCmd}"
+                        CommandParameter="True"
+                        Content="Select all" />
+
+                    <Button
+                        Grid.Column="1"
+                        Margin="10,10"
+                        Command="{Binding Path=SelectAllManagedLiveriesCmd}"
+                        CommandParameter="False"
+                        Content="Unselect all" />
+                </Grid>
             </Grid>
         </Border>
 

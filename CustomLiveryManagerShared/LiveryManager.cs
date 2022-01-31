@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Text.Json;
 
 namespace CustomLiveryManagerShared
 {
@@ -11,21 +7,22 @@ namespace CustomLiveryManagerShared
     {
         private const string LIVERY_PATH = @"Assetto Corsa Competizione\Customs\Liveries";
         private static readonly string userPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+        private static readonly string LiveryFolder = Path.Combine(userPath, LIVERY_PATH);
+        private static readonly string ManagerPath = Path.Combine(LiveryFolder, "LiveryManager.json");
 
         private List<string> _liveries;
-        private string _liveryFolder;
-        private ManagedLiveries _managedLiveries;
+        private List<string> _managedLiveries;
 
         public LiveryManager()
         {
-            _liveries = new List<string>();
-            _liveryFolder = Path.Combine(userPath, LIVERY_PATH);
+            _liveries = new();
             LoadLiveries();
-            _managedLiveries = new(_liveryFolder);
+            _managedLiveries = new();
+            LoadLiveriesFromJson();
         }
 
         public List<string> Liveries => _liveries;
-        public List<string> ManagedLiveries => _managedLiveries.Liveries;
+        public List<string> ManagedLiveries => _managedLiveries;
 
         public void AddLivery(string name)
         {
@@ -46,7 +43,7 @@ namespace CustomLiveryManagerShared
             {
                 if (!_managedLiveries.Contains(livery))
                 {
-                    var liveryPath = Path.Combine(_liveryFolder, livery);
+                    var liveryPath = Path.Combine(LiveryFolder, livery);
                     var files = Directory.GetFiles(liveryPath);
 
                     if (!emptyOnly || (emptyOnly && files.Length <= 2))
@@ -62,7 +59,7 @@ namespace CustomLiveryManagerShared
         {
             _liveries.Clear();
 
-            var liveryFolders = Directory.GetDirectories(_liveryFolder);
+            var liveryFolders = Directory.GetDirectories(LiveryFolder);
             foreach (var liveryFolder in liveryFolders)
             {
                 _liveries.Add(liveryFolder.Split('\\').Last());
@@ -71,7 +68,36 @@ namespace CustomLiveryManagerShared
 
         public void SaveManagedList()
         {
-            _managedLiveries.WriteLiveriesToJson();
+            WriteLiveriesToJson();
+        }
+
+        public void LoadLiveriesFromJson()
+        {
+            try
+            {
+                var jsonString = File.ReadAllText(ManagerPath);
+
+                if (jsonString.Length > 0)
+                {
+                    var temp = JsonSerializer.Deserialize<List<string>>(jsonString);
+                    if (temp is null)
+                    {
+                        Debug.WriteLine("No livery ?");
+                        return;
+                    }
+                    _managedLiveries = temp;
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                File.Create(ManagerPath).Close();
+            }
+        }
+
+        public void WriteLiveriesToJson()
+        {
+            var jsonString = JsonSerializer.Serialize(_managedLiveries);
+            File.WriteAllText(ManagerPath, jsonString);
         }
     }
 }

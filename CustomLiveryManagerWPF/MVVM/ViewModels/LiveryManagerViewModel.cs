@@ -2,11 +2,6 @@
 using CustomLiveryManagerShared;
 using CustomLiveryManagerWPF.Helper;
 using CustomLiveryManagerWPF.MVVM.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomLiveryManagerWPF.MVVM.ViewModels
 {
@@ -88,17 +83,29 @@ namespace CustomLiveryManagerWPF.MVVM.ViewModels
 
         private void SelectAllManagedLiveries(object obj)
         {
-            foreach(var managedLivery in _managedLiveries)
+            var state = false;
+            if ((string)obj == "True")
             {
-                managedLivery.IsSelected = !managedLivery.IsSelected;
+                state = true;
+            }
+
+            foreach (var managedLivery in _managedLiveries)
+            {
+                managedLivery.IsSelected = state;
             }
         }
 
         private void SelectAllLiveries(object obj)
         {
+            var state = false;
+            if ((string)obj == "True")
+            {
+                state = true;
+            }
+
             foreach(var livery in _liveries)
             {
-                livery.IsSelected = !livery.IsSelected;
+                livery.IsSelected = state;
             }
         }
 
