@@ -10,7 +10,6 @@
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
     <PackageReference Include="Caliburn.Micro.Core" Version="4.0.173" />
-    <PackageReference Include="squirrel.windows" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
